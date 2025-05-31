@@ -42,6 +42,6 @@ jobs:
       run: |
         coverage=$(grep -oP '(?<=Line coverage: )\d+' coveragereport/Summary.md)
         if [ $coverage -lt 90 ]; then
-          echo "Coverage is below 90% threshold: $coverage%"
+          echo "::warning::Coverage is below 90% threshold: $coverage%"
           exit 1
         fi
