@@ -1,4 +1,5 @@
 using System;
+using SpaceGame.Core;
 
 namespace SpaceGame.Commands
 {
@@ -44,9 +45,16 @@ namespace SpaceGame.Commands
             if (currentCommand == null)
                 throw new InvalidOperationException($"Command at index {_currentIndex} is null");
 
-            currentCommand.Execute();
+            try
+            {
+                currentCommand.Execute();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
-            // Recursively execute remaining commands
+            // Recursively execute remaining commands only if current command succeeded
             var nextMacroCommand = new MacroCommand(_commands, _currentIndex + 1);
             nextMacroCommand.Execute();
         }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using SpaceGame.Commands;
 using SpaceGame.IoC;
+using SpaceGame.Core;
 
 namespace SpaceGame.Tests.Commands
 {
@@ -24,7 +25,7 @@ namespace SpaceGame.Tests.Commands
             var mockCommand = new Mock<ICommand>();
 
             // Mock the IoC resolution for Move command
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Commands.Move",
                 (object[] args) => mockCommand.Object
@@ -55,7 +56,7 @@ namespace SpaceGame.Tests.Commands
             var commandQueue = new Queue<ICommand>();
             var mockCommand = new Mock<ICommand>();
 
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Commands.Rotate",
                 (object[] args) => mockCommand.Object
@@ -135,7 +136,7 @@ namespace SpaceGame.Tests.Commands
             var mockCommand = new Mock<ICommand>();
 
             // First, start a command
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Commands.Move",
                 (object[] args) => mockCommand.Object
@@ -269,7 +270,7 @@ namespace SpaceGame.Tests.Commands
                 ["Queue"] = new Queue<ICommand>()
             };
 
-            var startAction = Ioc.Resolve<ICommand>("Actions.Start", order);
+            var startAction = Core.IoC.IoC.Resolve<ICommand>("Actions.Start", order);
             Assert.NotNull(startAction);
             Assert.IsType<StartAction>(startAction);
         }
@@ -291,7 +292,7 @@ namespace SpaceGame.Tests.Commands
                 ["Queue"] = new Queue<ICommand>()
             };
 
-            var stopAction = Ioc.Resolve<ICommand>("Actions.Stop", order);
+            var stopAction = Core.IoC.IoC.Resolve<ICommand>("Actions.Stop", order);
             Assert.NotNull(stopAction);
             Assert.IsType<StopAction>(stopAction);
         }
@@ -313,9 +314,9 @@ namespace SpaceGame.Tests.Commands
                 ["Queue"] = new Queue<ICommand>()
             };
 
-            var startAction = Ioc.Resolve<ICommand>("Actions.Start", order);
-            var stopAction = Ioc.Resolve<ICommand>("Actions.Stop", order);
-            var registry = Ioc.Resolve<CommandRegistry>("CommandRegistry");
+            var startAction = Core.IoC.IoC.Resolve<ICommand>("Actions.Start", order);
+            var stopAction = Core.IoC.IoC.Resolve<ICommand>("Actions.Stop", order);
+            var registry = Core.IoC.IoC.Resolve<CommandRegistry>("CommandRegistry");
 
             Assert.NotNull(startAction);
             Assert.NotNull(stopAction);

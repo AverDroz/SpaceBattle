@@ -2,6 +2,7 @@ using Xunit;
 using Moq;
 using System;
 using SpaceGame.Commands;
+using SpaceGame.Core;
 using SpaceGame.IoC;
 
 namespace SpaceGame.Tests.Commands
@@ -78,9 +79,9 @@ namespace SpaceGame.Tests.Commands
             registerCommand.Execute();
 
             // Assert - Should be able to resolve as different interface types
-            var asICommand = Ioc.Resolve<ICommand>("Commands.CommandInjectable");
-            var asICommandInjectable = Ioc.Resolve<ICommandInjectable>("Commands.CommandInjectable");
-            var asConcreteType = Ioc.Resolve<CommandInjectableCommand>("Commands.CommandInjectable");
+            var asICommand = Core.IoC.IoC.Resolve<ICommand>("Commands.CommandInjectable");
+            var asICommandInjectable = Core.IoC.IoC.Resolve<ICommandInjectable>("Commands.CommandInjectable");
+            var asConcreteType = Core.IoC.IoC.Resolve<CommandInjectableCommand>("Commands.CommandInjectable");
 
             Assert.NotNull(asICommand);
             Assert.NotNull(asICommandInjectable);
@@ -104,8 +105,8 @@ namespace SpaceGame.Tests.Commands
             var testCommandMock = new Mock<ICommand>();
 
             // Act
-            var injectable = Ioc.Resolve<ICommandInjectable>("Commands.CommandInjectable");
-            var executable = Ioc.Resolve<ICommand>("Commands.CommandInjectable");
+            var injectable = Core.IoC.IoC.Resolve<ICommandInjectable>("Commands.CommandInjectable");
+            var executable = Core.IoC.IoC.Resolve<ICommand>("Commands.CommandInjectable");
 
             injectable.Inject(testCommandMock.Object);
             executable.Execute();

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using SpaceGame.Core;
+using SpaceGame.Core.IoC;
 
 namespace SpaceGame.Commands
 {
@@ -94,7 +96,7 @@ namespace SpaceGame.Commands
         public void Execute()
         {
             // Resolve the actual command for the operation type
-            var operationCommand = Ioc.Resolve<ICommand>($"Commands.{_operationType}", _gameObject);
+            var operationCommand = Core.IoC.IoC.Resolve<ICommand>($"Commands.{_operationType}", _gameObject);
             
             // Start the long-running operation
             _registry.StartOperation(_operationId, operationCommand);

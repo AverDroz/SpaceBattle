@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using SpaceGame.Core;
+using SpaceGame.Core.IoC;
 
 namespace SpaceGame.Commands
 {
-    /// <summary>
-    /// Action for starting long-running operations (Task 19)
-    /// </summary>
     public class StartAction : ICommand
     {
         private readonly IDictionary<string, object> _order;
@@ -40,14 +39,23 @@ namespace SpaceGame.Commands
         }
 
         private ICommand CreateLongRunningCommand(string operationName, object gameObject)
-        {
-            return operationName switch
             {
-                "Move" => Ioc.Resolve<ICommand>("Commands.Move", gameObject),
-                "Rotate" => Ioc.Resolve<ICommand>("Commands.Rotate", gameObject),
-                _ => throw new ArgumentException($"Unknown operation: {operationName}")
-            };
-        }
+                switch (operationName)
+                {
+                    case "Move":
+                    {
+                        var movingObject = Core.IoC.IoC.Resolve<IMovingObject>("Adapters.IMovingObject", gameObject);
+                        return Core.IoC.IoC.Resolve<ICommand>("Commands.Move", movingObject);
+                    }
+                    case "Rotate":
+                    {
+                        var rotatingObject = Core.IoC.IoC.Resolve<IRotatingObject>("Adapters.IRotatingObject", gameObject);
+                        return Core.IoC.IoC.Resolve<ICommand>("Commands.Rotate", rotatingObject);
+                    }
+                    default:
+                        throw new ArgumentException($"Unknown operation: {operationName}");
+                }
+            }
 
         private string GenerateCommandId(object gameObject, string operationName)
         {
@@ -56,9 +64,6 @@ namespace SpaceGame.Commands
         }
     }
 
-    /// <summary>
-    /// Action for stopping long-running operations (Task 20)
-    /// </summary>
     public class StopAction : ICommand
     {
         private readonly IDictionary<string, object> _order;
@@ -123,7 +128,6 @@ namespace SpaceGame.Commands
 
     /// <summary>
     /// Registry for tracking active long-running commands
-    /// Implements O(1) command lookup and removal as required by task
     /// </summary>
     public class CommandRegistry
     {

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using SpaceGame.Commands;
+using SpaceGame.Core;
+using SpaceGame.Core.IoC;
 
 namespace SpaceGame.IoC
 {
@@ -11,7 +13,7 @@ namespace SpaceGame.IoC
     {
         public void Execute()
         {
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Actions.Start",
                 (object[] args) =>
@@ -35,7 +37,7 @@ namespace SpaceGame.IoC
     {
         public void Execute()
         {
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Actions.Stop",
                 (object[] args) =>
@@ -63,7 +65,7 @@ namespace SpaceGame.IoC
             new RegisterIoCDependencyActionsStop().Execute();
 
             // Register CommandRegistry as singleton
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "CommandRegistry",
                 (object[] args) => CommandRegistry.Instance

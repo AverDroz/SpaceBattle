@@ -1,5 +1,7 @@
 using System;
 using SpaceGame.Commands;
+using SpaceGame.Core;
+using SpaceGame.Core.IoC;
 
 namespace SpaceGame.IoC
 {
@@ -10,7 +12,7 @@ namespace SpaceGame.IoC
     {
         public void Execute()
         {
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Commands.Send",
                 (object[] args) =>

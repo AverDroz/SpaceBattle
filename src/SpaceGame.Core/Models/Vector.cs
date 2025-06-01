@@ -1,83 +1,114 @@
-namespace SpaceGame.Core.Models;
+using System;
+using System.Linq;
 
-public class Vector : IEquatable<Vector>
+namespace SpaceGame.Core
 {
-    private readonly int[] _coordinates;
-
-    public Vector(params int[] coordinates)
+    /// <summary>
+    /// Vector in n-dimensional space with integer coordinates (Task 1, Point 4)
+    /// </summary>
+    public class Vector
     {
-        _coordinates = coordinates ?? throw new ArgumentNullException(nameof(coordinates));
-        if (_coordinates.Length == 0)
-            throw new ArgumentException("Vector must have at least one coordinate", nameof(coordinates));
-    }
+        private readonly int[] _coordinates;
 
-    public int Dimension => _coordinates.Length;
-
-    public int this[int index] => _coordinates[index];
-
-    public static Vector operator +(Vector left, Vector right)
-    {
-        if (left == null) throw new ArgumentNullException(nameof(left));
-        if (right == null) throw new ArgumentNullException(nameof(right));
-        
-        if (left.Dimension != right.Dimension)
-            throw new ArgumentException($"Cannot add vectors of different dimensions: {left.Dimension} and {right.Dimension}");
-
-        var result = new int[left.Dimension];
-        for (int i = 0; i < left.Dimension; i++)
+        /// <summary>
+        /// Creates vector with specified coordinates
+        /// </summary>
+        /// <param name="coordinates">Coordinates array</param>
+        public Vector(params int[] coordinates)
         {
-            result[i] = left._coordinates[i] + right._coordinates[i];
+            _coordinates = coordinates?.ToArray() ?? throw new ArgumentNullException(nameof(coordinates));
         }
 
-        return new Vector(result);
-    }
+        /// <summary>
+        /// Gets coordinate at specified index
+        /// </summary>
+        /// <param name="index">Index</param>
+        /// <returns>Coordinate value</returns>
+        public int this[int index] => _coordinates[index];
 
-    public bool Equals(Vector? other)
-    {
-        if (other is null) return false;
-        if (ReferenceEquals(this, other)) return true;
-        if (Dimension != other.Dimension) return false;
+        /// <summary>
+        /// Gets vector dimension
+        /// </summary>
+        public int Dimension => _coordinates.Length;
 
-        for (int i = 0; i < Dimension; i++)
+        /// <summary>
+        /// Vector addition operation
+        /// </summary>
+        /// <param name="left">First vector</param>
+        /// <param name="right">Second vector</param>
+        /// <returns>Sum of vectors</returns>
+        /// <exception cref="ArgumentException">Thrown when vectors have different dimensions</exception>
+        public static Vector operator +(Vector left, Vector right)
         {
-            if (_coordinates[i] != other._coordinates[i])
-                return false;
-        }
+            if (left == null) throw new ArgumentNullException(nameof(left));
+            if (right == null) throw new ArgumentNullException(nameof(right));
 
-        return true;
-    }
+            if (left.Dimension != right.Dimension)
+                throw new ArgumentException("Vectors must have the same dimension");
 
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as Vector);
-    }
-
-    public override int GetHashCode()
-    {
-        unchecked
-        {
-            int hash = 17;
-            foreach (var coordinate in _coordinates)
+            var result = new int[left.Dimension];
+            for (int i = 0; i < left.Dimension; i++)
             {
-                hash = hash * 23 + coordinate.GetHashCode();
+                result[i] = left[i] + right[i];
             }
-            return hash;
+
+            return new Vector(result);
         }
-    }
 
-    public static bool operator ==(Vector? left, Vector? right)
-    {
-        if (left is null) return right is null;
-        return left.Equals(right);
-    }
+        /// <summary>
+        /// Equality operator
+        /// </summary>
+        public static bool operator ==(Vector left, Vector right)
+        {
+            if (ReferenceEquals(left, right)) return true;
+            if (left is null || right is null) return false;
+            return left.Equals(right);
+        }
 
-    public static bool operator !=(Vector? left, Vector? right)
-    {
-        return !(left == right);
-    }
+        /// <summary>
+        /// Inequality operator
+        /// </summary>
+        public static bool operator !=(Vector left, Vector right)
+        {
+            return !(left == right);
+        }
 
-    public override string ToString()
-    {
-        return $"({string.Join(", ", _coordinates)})";
+        /// <summary>
+        /// Checks equality with another vector
+        /// </summary>
+        public override bool Equals(object? obj)
+        {
+            if (obj is not Vector other) return false;
+            if (Dimension != other.Dimension) return false;
+
+            for (int i = 0; i < Dimension; i++)
+            {
+                if (_coordinates[i] != other._coordinates[i])
+                    return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Gets hash code
+        /// </summary>
+        public override int GetHashCode()
+        {
+            var hash = new HashCode();
+            foreach (var coord in _coordinates)
+            {
+                hash.Add(coord);
+            }
+            return hash.ToHashCode();
+        }
+
+        /// <summary>
+        /// String representation
+        /// </summary>
+        public override string ToString()
+        {
+            return $"({string.Join(", ", _coordinates)})";
+        }
     }
 }

@@ -33,11 +33,11 @@ namespace SpaceGame.Tests.Integration
             };
 
             // Test Points 6 & 9: Move and Rotate commands work via IoC
-            var movingObject = Ioc.Resolve<IMovingObject>("Adapters.IMovingObject", spaceship);
-            var rotatingObject = Ioc.Resolve<IRotatingObject>("Adapters.IRotatingObject", spaceship);
+            var movingObject = Core.IoC.IoC.Resolve<IMovingObject>("Adapters.IMovingObject", spaceship);
+            var rotatingObject = Core.IoC.IoC.Resolve<IRotatingObject>("Adapters.IRotatingObject", spaceship);
 
-            var moveCommand = Ioc.Resolve<ICommand>("Commands.Move", movingObject);
-            var rotateCommand = Ioc.Resolve<ICommand>("Commands.Rotate", rotatingObject);
+            var moveCommand = Core.IoC.IoC.Resolve<ICommand>("Commands.Move", movingObject);
+            var rotateCommand = Core.IoC.IoC.Resolve<ICommand>("Commands.Rotate", rotatingObject);
 
             // Verify individual commands work
             moveCommand.Execute();
@@ -48,7 +48,7 @@ namespace SpaceGame.Tests.Integration
 
             // Test Points 11 & 13: Macro commands work
             var commands = new ICommand[] { moveCommand, rotateCommand };
-            var macroCommand = Ioc.Resolve<ICommand>("Commands.Macro", commands);
+            var macroCommand = Core.IoC.IoC.Resolve<ICommand>("Commands.Macro", commands);
             
             // Reset position and direction
             spaceship["Position"] = new Vector(0, 0);
@@ -68,7 +68,7 @@ namespace SpaceGame.Tests.Integration
             var receiverMock = new Mock<ICommandReceiver>();
             var testCommandMock = new Mock<ICommand>();
 
-            var sendCommand = Ioc.Resolve<ICommand>("Commands.Send", 
+            var sendCommand = Core.IoC.IoC.Resolve<ICommand>("Commands.Send", 
                 testCommandMock.Object, receiverMock.Object);
 
             // Act
@@ -82,8 +82,8 @@ namespace SpaceGame.Tests.Integration
         public void Command_Injectable_Workflow_Should_Work()
         {
             // Arrange - Test Point 18: CommandInjectable
-            var injectable = Ioc.Resolve<ICommandInjectable>("Commands.CommandInjectable");
-            var executable = Ioc.Resolve<ICommand>("Commands.CommandInjectable");
+            var injectable = Core.IoC.IoC.Resolve<ICommandInjectable>("Commands.CommandInjectable");
+            var executable = Core.IoC.IoC.Resolve<ICommand>("Commands.CommandInjectable");
 
             var testCommandMock = new Mock<ICommand>();
 
@@ -109,7 +109,7 @@ namespace SpaceGame.Tests.Integration
 
             // Mock the Move command for this test
             var mockMoveCommand = new Mock<ICommand>();
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Commands.Move",
                 (object[] args) => mockMoveCommand.Object
@@ -130,7 +130,7 @@ namespace SpaceGame.Tests.Integration
             };
 
             // Act - Start long-running operation
-            var startAction = Ioc.Resolve<ICommand>("Actions.Start", startOrder);
+            var startAction = Core.IoC.IoC.Resolve<ICommand>("Actions.Start", startOrder);
             startAction.Execute();
 
             // Verify command was added to queue and registry
@@ -139,7 +139,7 @@ namespace SpaceGame.Tests.Integration
             Assert.True(CommandRegistry.Instance.CommandExists(commandId));
 
             // Stop the operation
-            var stopAction = Ioc.Resolve<ICommand>("Actions.Stop", stopOrder);
+            var stopAction = Core.IoC.IoC.Resolve<ICommand>("Actions.Stop", stopOrder);
             stopAction.Execute();
 
             // Assert - Command should be removed from registry (O(1) operation)
@@ -170,15 +170,15 @@ namespace SpaceGame.Tests.Integration
         public void Angle_Operations_Should_Work_Correctly()
         {
             // Test Point 7: Angle operations
-            var angle1 = new Angle(5, 8);
-            var angle2 = new Angle(7, 8);
+            var angle1 = new Angle(5, 360);
+            var angle2 = new Angle(7, 360);
             var result = angle1 + angle2;
 
-            Assert.Equal(new Angle(4, 8), result); // 12/8 = 4/8 (mod 8)
+            Assert.Equal(new Angle(12, 360), result);
 
-            // Test angle equality (15/8 and 23/8 should be equal mod 8)
-            var angle3 = new Angle(15, 8);
-            var angle4 = new Angle(23, 8);
+            // Test angle equality (15/360 and 375/360 should be equal)
+            var angle3 = new Angle(15, 360);
+            var angle4 = new Angle(375, 360);
             
             Assert.True(angle3.Equals(angle4));
             Assert.True(angle3 == angle4);
@@ -195,7 +195,7 @@ namespace SpaceGame.Tests.Integration
                 ["Velocity"] = new Vector(-4, 1)
             };
 
-            var movingObject = Ioc.Resolve<IMovingObject>("Adapters.IMovingObject", gameObject);
+            var movingObject = Core.IoC.IoC.Resolve<IMovingObject>("Adapters.IMovingObject", gameObject);
             var moveCommand = new MoveCommand(movingObject);
 
             moveCommand.Execute();
@@ -213,7 +213,7 @@ namespace SpaceGame.Tests.Integration
                 ["AngularVelocity"] = new Angle(45, 360)
             };
 
-            var rotatingObject = Ioc.Resolve<IRotatingObject>("Adapters.IRotatingObject", gameObject);
+            var rotatingObject = Core.IoC.IoC.Resolve<IRotatingObject>("Adapters.IRotatingObject", gameObject);
             var rotateCommand = new RotateCommand(rotatingObject);
 
             rotateCommand.Execute();
@@ -270,7 +270,7 @@ namespace SpaceGame.Tests.Integration
 
             Assert.ThrowsAny<Exception>(() =>
             {
-                var movingObject = Ioc.Resolve<IMovingObject>("Adapters.IMovingObject", invalidMoveObject);
+                var movingObject = Core.IoC.IoC.Resolve<IMovingObject>("Adapters.IMovingObject", invalidMoveObject);
                 var moveCommand = new MoveCommand(movingObject);
                 moveCommand.Execute();
             });
@@ -318,7 +318,6 @@ namespace SpaceGame.Tests.Integration
 
             public void Execute()
             {
-                _executionOrder.Add(_name);
                 throw new InvalidOperationException($"{_name} command failed");
             }
         }

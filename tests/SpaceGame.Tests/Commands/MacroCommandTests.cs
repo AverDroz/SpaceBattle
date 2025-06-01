@@ -3,6 +3,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using SpaceGame.Commands;
+using SpaceGame.Core;
 
 namespace SpaceGame.Tests.Commands
 {
@@ -135,7 +136,6 @@ namespace SpaceGame.Tests.Commands
 
             public void Execute()
             {
-                _executionOrder.Add(_name);
                 throw new InvalidOperationException($"{_name} failed");
             }
         }

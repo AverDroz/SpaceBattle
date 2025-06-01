@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using SpaceGame.Commands;
 using SpaceGame.IoC;
+using SpaceGame.Core;
 
 namespace SpaceGame.Tests.IoC
 {
@@ -24,7 +25,7 @@ namespace SpaceGame.Tests.IoC
             var command2 = new TestCommand("Test2", executionOrder);
             var commands = new ICommand[] { command1, command2 };
 
-            var macroCommand = Ioc.Resolve<ICommand>("Commands.Macro", commands);
+            var macroCommand = Core.IoC.IoC.Resolve<ICommand>("Commands.Macro", commands);
             
             Assert.NotNull(macroCommand);
             Assert.IsType<MacroCommand>(macroCommand);
@@ -42,7 +43,7 @@ namespace SpaceGame.Tests.IoC
             
             // Mock command specifications
             var mockCommandNames = new string[] { "Commands.Test1", "Commands.Test2" };
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Specs.Test",
                 (object[] args) => mockCommandNames
@@ -50,13 +51,13 @@ namespace SpaceGame.Tests.IoC
 
             // Mock individual commands
             var executionOrder = new List<string>();
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Commands.Test1",
                 (object[] args) => new TestCommand("Test1", executionOrder)
             ).Execute();
 
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Commands.Test2",
                 (object[] args) => new TestCommand("Test2", executionOrder)
@@ -91,7 +92,7 @@ namespace SpaceGame.Tests.IoC
             
             // Mock command specifications with non-existent command
             var mockCommandNames = new string[] { "Commands.NonExistent" };
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Specs.TestFail",
                 (object[] args) => mockCommandNames
@@ -113,13 +114,13 @@ namespace SpaceGame.Tests.IoC
             var moveSpecs = new string[] { "Commands.Move" };
             var rotateSpecs = new string[] { "Commands.Rotate" };
             
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Specs.Move",
                 (object[] args) => moveSpecs
             ).Execute();
 
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Specs.Rotate",
                 (object[] args) => rotateSpecs
@@ -127,13 +128,13 @@ namespace SpaceGame.Tests.IoC
 
             // Mock the individual commands
             var executionOrder = new List<string>();
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Commands.Move",
                 (object[] args) => new TestCommand("Move", executionOrder)
             ).Execute();
 
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Commands.Rotate",
                 (object[] args) => new TestCommand("Rotate", executionOrder)
@@ -145,8 +146,8 @@ namespace SpaceGame.Tests.IoC
             registerCommand.Execute();
 
             // Assert
-            var macroMoveCommand = Ioc.Resolve<ICommand>("Macro.Move", new object[0]);
-            var macroRotateCommand = Ioc.Resolve<ICommand>("Macro.Rotate", new object[0]);
+            var macroMoveCommand = Core.IoC.IoC.Resolve<ICommand>("Macro.Move", new object[0]);
+            var macroRotateCommand = Core.IoC.IoC.Resolve<ICommand>("Macro.Rotate", new object[0]);
 
             Assert.NotNull(macroMoveCommand);
             Assert.NotNull(macroRotateCommand);

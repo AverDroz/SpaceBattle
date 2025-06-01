@@ -1,5 +1,7 @@
 using System;
 using SpaceGame.Commands;
+using SpaceGame.Core;
+using SpaceGame.Core.IoC;
 
 namespace SpaceGame.IoC
 {
@@ -10,19 +12,24 @@ namespace SpaceGame.IoC
     {
         public void Execute()
         {
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Commands.Macro",
                 (object[] args) =>
-                {
-                    if (args.Length != 1)
-                        throw new ArgumentException("Commands.Macro requires exactly one argument: array of commands");
+                    {
+                        // Если передан массив команд напрямую
+                        if (args.Length == 1 && args[0] is ICommand[] commands)
+                            return new MacroCommand(commands);
+                        
+                        // Если команды переданы как отдельные аргументы
+                        if (args.All(arg => arg is ICommand))
+                        {
+                            var commandArray = args.Cast<ICommand>().ToArray();
+                            return new MacroCommand(commandArray);
+                        }
 
-                    if (args[0] is not ICommand[] commands)
-                        throw new ArgumentException("First argument must be ICommand[] array");
-
-                    return new MacroCommand(commands);
-                }
+                        throw new ArgumentException("Arguments must be ICommand array or individual ICommand objects");
+                    }
             ).Execute();
         }
     }
@@ -47,7 +54,7 @@ namespace SpaceGame.IoC
         public ICommand Resolve(object[] args)
         {
             // Get list of command names from specification
-            var commandNames = Ioc.Resolve<string[]>(_commandSpec);
+            var commandNames = Core.IoC.IoC.Resolve<string[]>(_commandSpec);
             
             if (commandNames == null)
                 throw new InvalidOperationException($"Command specification '{_commandSpec}' not found");
@@ -56,7 +63,7 @@ namespace SpaceGame.IoC
             var commands = CreateCommandsArray(commandNames, 0, args);
             
             // Create and return MacroCommand
-            return Ioc.Resolve<ICommand>("Commands.Macro", commands);
+            return new MacroCommand(commands);
         }
 
         /// <summary>
@@ -73,7 +80,7 @@ namespace SpaceGame.IoC
                 return new ICommand[0];
 
             // Resolve current command
-            var currentCommand = Ioc.Resolve<ICommand>(commandNames[currentIndex], args);
+            var currentCommand = Core.IoC.IoC.Resolve<ICommand>(commandNames[currentIndex], args);
             
             // Recursively get remaining commands
             var remainingCommands = CreateCommandsArray(commandNames, currentIndex + 1, args);
@@ -126,7 +133,7 @@ namespace SpaceGame.IoC
         public void Execute()
         {
             // Register Macro.Move dependency
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Macro.Move",
                 (object[] args) =>
@@ -137,7 +144,7 @@ namespace SpaceGame.IoC
             ).Execute();
 
             // Register Macro.Rotate dependency
-            Ioc.Resolve<ICommand>(
+            Core.IoC.IoC.Resolve<ICommand>(
                 "IoC.Register",
                 "Macro.Rotate",
                 (object[] args) =>

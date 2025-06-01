@@ -1,9 +1,10 @@
 using System;
+using SpaceGame.Core;
 
 namespace SpaceGame.Commands
 {
     /// <summary>
-    /// Interface for command injection (Task 16)
+    /// Interface for command injection
     /// </summary>
     public interface ICommandInjectable
     {
@@ -15,11 +16,11 @@ namespace SpaceGame.Commands
     }
 
     /// <summary>
-    /// Command that implements both ICommand and ICommandInjectable (Task 17)
+    /// Command that implements both ICommand and ICommandInjectable
     /// </summary>
     public class CommandInjectableCommand : ICommand, ICommandInjectable
     {
-        private ICommand _injectedCommand;
+        private ICommand? _injectedCommand;
 
         /// <summary>
         /// Injects a command to be executed when Execute is called

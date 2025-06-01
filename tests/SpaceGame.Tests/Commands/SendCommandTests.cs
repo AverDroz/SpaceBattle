@@ -3,6 +3,7 @@ using Moq;
 using System;
 using SpaceGame.Commands;
 using SpaceGame.IoC;
+using SpaceGame.Core;
 
 namespace SpaceGame.Tests.Commands
 {
@@ -81,7 +82,7 @@ namespace SpaceGame.Tests.Commands
             var commandMock = new Mock<ICommand>();
             var receiverMock = new Mock<ICommandReceiver>();
 
-            var sendCommand = Ioc.Resolve<ICommand>("Commands.Send", 
+            var sendCommand = Core.IoC.IoC.Resolve<ICommand>("Commands.Send", 
                 commandMock.Object, receiverMock.Object);
 
             Assert.NotNull(sendCommand);
@@ -101,7 +102,7 @@ namespace SpaceGame.Tests.Commands
 
             // Act & Assert
             Assert.Throws<ArgumentException>(() => 
-                Ioc.Resolve<ICommand>("Commands.Send", new Mock<ICommand>().Object));
+                Core.IoC.IoC.Resolve<ICommand>("Commands.Send", new Mock<ICommand>().Object));
         }
 
         [Fact]
@@ -113,7 +114,7 @@ namespace SpaceGame.Tests.Commands
 
             // Act & Assert
             Assert.Throws<ArgumentException>(() => 
-                Ioc.Resolve<ICommand>("Commands.Send", "not a command", "not a receiver"));
+                Core.IoC.IoC.Resolve<ICommand>("Commands.Send", "not a command", "not a receiver"));
         }
     }
 }
