@@ -1,75 +1,100 @@
-namespace SpaceGame.Core.Models;
+using System;
 
-public class Angle : IEquatable<Angle>
+namespace SpaceGame.Core
 {
-    private readonly int _numerator;
-    private static readonly int Denominator = 360;
-
-    public Angle(int numerator, int denominator)
+    /// <summary>
+    /// Angle represented as rational number (Task 1, Point 7)
+    /// </summary>
+    public class Angle
     {
-        if (denominator != Denominator)
+        private readonly int _numerator;
+        private static readonly int _denominator = 360; // Static denominator as per requirements
+
+        /// <summary>
+        /// Creates angle with specified numerator and denominator
+        /// </summary>
+        /// <param name="numerator">Numerator</param>
+        /// <param name="denominator">Denominator (must match static denominator)</param>
+        public Angle(int numerator, int denominator)
         {
-            // Приводим к общему знаменателю
-            _numerator = numerator * Denominator / denominator;
+            if (denominator != _denominator)
+                throw new ArgumentException($"Denominator must be {_denominator}");
+
+            // Normalize angle to [0, denominator) range
+            _numerator = ((numerator % _denominator) + _denominator) % _denominator;
         }
-        else
+
+        /// <summary>
+        /// Gets numerator
+        /// </summary>
+        public int Numerator => _numerator;
+
+        /// <summary>
+        /// Gets denominator
+        /// </summary>
+        public static int Denominator => _denominator;
+
+        /// <summary>
+        /// Angle addition
+        /// </summary>
+        public static Angle operator +(Angle left, Angle right)
         {
-            _numerator = numerator;
+            if (left == null) throw new ArgumentNullException(nameof(left));
+            if (right == null) throw new ArgumentNullException(nameof(right));
+
+            int sum = left._numerator + right._numerator;
+            return new Angle(sum, _denominator);
         }
-        
-        // Нормализуем угол к диапазону [0, Denominator)
-        _numerator = _numerator % Denominator;
-        if (_numerator < 0) _numerator += Denominator;
-    }
 
-    public int Numerator => _numerator;
-    public static int CommonDenominator => Denominator;
+        /// <summary>
+        /// Equality operator
+        /// </summary>
+        public static bool operator ==(Angle left, Angle right)
+        {
+            if (ReferenceEquals(left, right)) return true;
+            if (left is null || right is null) return false;
+            return left.Equals(right);
+        }
 
-    public static Angle operator +(Angle left, Angle right)
-    {
-        if (left == null) throw new ArgumentNullException(nameof(left));
-        if (right == null) throw new ArgumentNullException(nameof(right));
+        /// <summary>
+        /// Inequality operator
+        /// </summary>
+        public static bool operator !=(Angle left, Angle right)
+        {
+            return !(left == right);
+        }
 
-        var sum = left._numerator + right._numerator;
-        return new Angle(sum, Denominator);
-    }
+        /// <summary>
+        /// Implicit conversion to double for Math operations
+        /// </summary>
+        public static implicit operator double(Angle angle)
+        {
+            return angle._numerator * 2.0 * Math.PI / _denominator;
+        }
 
-    public static implicit operator double(Angle angle)
-    {
-        if (angle == null) throw new ArgumentNullException(nameof(angle));
-        return 2 * Math.PI * angle._numerator / Denominator;
-    }
+        /// <summary>
+        /// Checks equality with another angle
+        /// </summary>
+        public override bool Equals(object? obj)
+        {
+            if (obj is not Angle other) return false;
+            return _numerator == other._numerator;
+        }
 
-    public bool Equals(Angle? other)
-    {
-        if (other is null) return false;
-        if (ReferenceEquals(this, other)) return true;
-        return _numerator == other._numerator;
-    }
+        /// <summary>
+        /// Gets hash code
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return _numerator.GetHashCode();
+        }
 
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as Angle);
-    }
-
-    public override int GetHashCode()
-    {
-        return _numerator.GetHashCode();
-    }
-
-    public static bool operator ==(Angle? left, Angle? right)
-    {
-        if (left is null) return right is null;
-        return left.Equals(right);
-    }
-
-    public static bool operator !=(Angle? left, Angle? right)
-    {
-        return !(left == right);
-    }
-
-    public override string ToString()
-    {
-        return $"{_numerator}/{Denominator}";
+        /// <summary>
+        /// String representation
+        /// </summary>
+        public override string ToString()
+        {
+            return $"{_numerator}/{_denominator}";
+        }
     }
 }

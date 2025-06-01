@@ -1,36 +1,48 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1EEB9435-6AF8-4BA8-A756-35837BE6CB4B}"
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceGame.Core", "src\SpaceGame.Core\SpaceGame.Core.csproj", "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceGame.Core", "src\SpaceGame.Core\SpaceGame.Core.csproj", "{891B3629-4E93-47C8-8262-111ADE4633C7}"
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceGame.Commands", "src\SpaceGame.Commands\SpaceGame.Commands.csproj", "{B2C3D4E5-F678-90AB-CDEF-123456789012}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{07C7D14C-12C8-4A62-BC1D-A00877FC084D}"
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceGame.IoC", "src\SpaceGame.IoC\SpaceGame.IoC.csproj", "{C3D4E5F6-7890-ABCD-EF12-345678901234}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceGame.Core.Tests", "tests\SpaceGame.Core.Tests\SpaceGame.Core.Tests.csproj", "{3D0160B7-A33B-4F01-80CA-F72A44B7EA0D}"
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceGame.Tests", "tests\SpaceGame.Tests\SpaceGame.Tests.csproj", "{D4E5F678-90AB-CDEF-1234-567890123456}"
 EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceGame.Examples", "examples\SpaceGame.Examples\SpaceGame.Examples.csproj", "{E5F67890-ABCD-EF12-3456-789012345678}"
+EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{891B3629-4E93-47C8-8262-111ADE4633C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{891B3629-4E93-47C8-8262-111ADE4633C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{891B3629-4E93-47C8-8262-111ADE4633C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{891B3629-4E93-47C8-8262-111ADE4633C7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3D0160B7-A33B-4F01-80CA-F72A44B7EA0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3D0160B7-A33B-4F01-80CA-F72A44B7EA0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3D0160B7-A33B-4F01-80CA-F72A44B7EA0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3D0160B7-A33B-4F01-80CA-F72A44B7EA0D}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{891B3629-4E93-47C8-8262-111ADE4633C7} = {1EEB9435-6AF8-4BA8-A756-35837BE6CB4B}
-		{3D0160B7-A33B-4F01-80CA-F72A44B7EA0D} = {07C7D14C-12C8-4A62-BC1D-A00877FC084D}
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2C3D4E5-F678-90AB-CDEF-123456789012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C3D4E5-F678-90AB-CDEF-123456789012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2C3D4E5-F678-90AB-CDEF-123456789012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2C3D4E5-F678-90AB-CDEF-123456789012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3D4E5F6-7890-ABCD-EF12-345678901234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3D4E5F6-7890-ABCD-EF12-345678901234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3D4E5F6-7890-ABCD-EF12-345678901234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3D4E5F6-7890-ABCD-EF12-345678901234}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4E5F678-90AB-CDEF-1234-567890123456}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4E5F678-90AB-CDEF-1234-567890123456}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4E5F678-90AB-CDEF-1234-567890123456}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4E5F678-90AB-CDEF-1234-567890123456}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5F67890-ABCD-EF12-3456-789012345678}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5F67890-ABCD-EF12-3456-789012345678}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5F67890-ABCD-EF12-3456-789012345678}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5F67890-ABCD-EF12-3456-789012345678}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

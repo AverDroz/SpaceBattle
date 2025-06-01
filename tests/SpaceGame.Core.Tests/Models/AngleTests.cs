@@ -6,14 +6,14 @@ public class AngleTests
     public void Addition_Of_Angles_Should_Return_Correct_Result()
     {
         // Arrange
-        var angle1 = new Angle(5, 8);
-        var angle2 = new Angle(7, 8);
+        var angle1 = new Angle(5, 360);
+        var angle2 = new Angle(7, 360);
 
         // Act
         var result = angle1 + angle2;
 
         // Assert
-        var expected = new Angle(4, 8);
+        var expected = new Angle(12, 360);
         Assert.Equal(expected, result);
     }
 
@@ -21,8 +21,8 @@ public class AngleTests
     public void Equals_Method_Should_Return_True_For_Equal_Angles()
     {
         // Arrange
-        var angle1 = new Angle(15, 8);
-        var angle2 = new Angle(23, 8);
+        var angle1 = new Angle(15, 360);
+        var angle2 = new Angle(23, 360);
 
         // Act & Assert
         Assert.True(angle1.Equals(angle2));
@@ -32,8 +32,8 @@ public class AngleTests
     public void Equality_Operator_Should_Return_True_For_Equal_Angles()
     {
         // Arrange
-        var angle1 = new Angle(15, 8);
-        var angle2 = new Angle(23, 8);
+        var angle1 = new Angle(15, 360);
+        var angle2 = new Angle(23, 360);
 
         // Act & Assert
         Assert.True(angle1 == angle2);
@@ -43,8 +43,8 @@ public class AngleTests
     public void Equals_Method_Should_Return_False_For_Different_Angles()
     {
         // Arrange
-        var angle1 = new Angle(1, 8);
-        var angle2 = new Angle(2, 8);
+        var angle1 = new Angle(1, 360);
+        var angle2 = new Angle(2, 360);
 
         // Act & Assert
         Assert.False(angle1.Equals(angle2));
@@ -54,8 +54,8 @@ public class AngleTests
     public void Inequality_Operator_Should_Return_True_For_Different_Angles()
     {
         // Arrange
-        var angle1 = new Angle(1, 8);
-        var angle2 = new Angle(2, 8);
+        var angle1 = new Angle(1, 360);
+        var angle2 = new Angle(2, 360);
 
         // Act & Assert
         Assert.True(angle1 != angle2);
@@ -65,7 +65,7 @@ public class AngleTests
     public void Angle_Should_Have_HashCode()
     {
         // Arrange
-        var angle = new Angle(1, 8);
+        var angle = new Angle(1, 360);
 
         // Act
         var hashCode = angle.GetHashCode();
