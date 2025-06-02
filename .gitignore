@@ -221,3 +221,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# test reports Coverlet, ReportGenerator
+coverage/
+coverage-report/
