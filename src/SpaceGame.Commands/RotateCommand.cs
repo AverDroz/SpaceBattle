@@ -4,7 +4,7 @@ using SpaceGame.Core;
 namespace SpaceGame.Commands
 {
     /// <summary>
-    /// Command for rotating objects (Task 1, Point 8)
+    /// Command for rotating objects
     /// </summary>
     public class RotateCommand : ICommand
     {

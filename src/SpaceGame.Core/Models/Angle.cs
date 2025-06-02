@@ -3,7 +3,7 @@ using System;
 namespace SpaceGame.Core
 {
     /// <summary>
-    /// Angle represented as rational number (Task 1, Point 7)
+    /// Angle represented as rational number 
     /// </summary>
     public class Angle
     {

@@ -47,7 +47,7 @@ namespace SpaceGame.IoC
     }
 
     /// <summary>
-    /// Register RotateCommand dependency in IoC container (Task 1, Point 9)
+    /// Register RotateCommand dependency in IoC container 
     /// </summary>
     public class RegisterIoCDependencyRotateCommand : ICommand
     {

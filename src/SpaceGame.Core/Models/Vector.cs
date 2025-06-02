@@ -4,7 +4,7 @@ using System.Linq;
 namespace SpaceGame.Core
 {
     /// <summary>
-    /// Vector in n-dimensional space with integer coordinates (Task 1, Point 4)
+    /// Vector in n-dimensional space with integer coordinates 
     /// </summary>
     public class Vector
     {

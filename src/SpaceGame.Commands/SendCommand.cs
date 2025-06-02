@@ -4,7 +4,7 @@ using SpaceGame.Core;
 namespace SpaceGame.Commands
 {
     /// <summary>
-    /// Interface for receiving commands (Task 14)
+    /// Interface for receiving commands 
     /// </summary>
     public interface ICommandReceiver
     {
@@ -16,7 +16,7 @@ namespace SpaceGame.Commands
     }
 
     /// <summary>
-    /// Command for sending commands to a receiver (Task 14)
+    /// Command for sending commands to a receiver 
     /// </summary>
     public class SendCommand : ICommand
     {

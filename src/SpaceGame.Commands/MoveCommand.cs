@@ -4,7 +4,7 @@ using SpaceGame.Core;
 namespace SpaceGame.Commands
 {
     /// <summary>
-    /// Command for moving objects (Task 1, Point 5)
+    /// Command for moving objects 
     /// </summary>
     public class MoveCommand : ICommand
     {
