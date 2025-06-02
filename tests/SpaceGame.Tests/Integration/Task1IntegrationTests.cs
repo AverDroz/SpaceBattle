@@ -23,6 +23,8 @@ namespace SpaceGame.Tests.Integration
         [Fact]
         public void Complete_Task1_Workflow_Should_Work_End_To_End()
         {
+            new RegisterIoCDependencyMoveCommand().Execute();
+            new RegisterIoCDependencyRotateCommand().Execute();
             // Arrange - Create a spaceship that can move and rotate
             var spaceship = new Dictionary<string, object>
             {
@@ -188,6 +190,7 @@ namespace SpaceGame.Tests.Integration
         [Fact]
         public void Move_Command_Should_Update_Position_Correctly()
         {
+            new RegisterIoCDependencyMoveCommand().Execute();
             // Test Point 5: Move command behavior
             var gameObject = new Dictionary<string, object>
             {

@@ -31,7 +31,7 @@ namespace SpaceGame.IoC
     }
 
     /// <summary>
-    /// Register Actions.Stop dependency in IoC container (Task 20)
+    /// Register Actions.Stop dependency in IoC container
     /// </summary>
     public class RegisterIoCDependencyActionsStop : ICommand
     {
