@@ -7,7 +7,7 @@ using SpaceGame.Core.IoC;
 namespace SpaceGame.IoC
 {
     /// <summary>
-    /// Register Actions.Start dependency in IoC container (Task 19)
+    /// Register Actions.Start dependency in IoC container
     /// </summary>
     public class RegisterIoCDependencyActionsStart : ICommand
     {
