@@ -25,7 +25,7 @@ namespace SpaceGame.Commands
 
             try
             {
-                _movingObject.Position = _movingObject.Position + _movingObject.Velocity;
+                _movingObject.Position += _movingObject.Velocity;
             }
             catch (Exception ex)
             {
