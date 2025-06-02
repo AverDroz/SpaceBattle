@@ -8,14 +8,22 @@ using SpaceGame.IoC;
 
 namespace SpaceGame.Tests.Integration
 {
+ 
+    [CollectionDefinition("Non-Parallel Collection", DisableParallelization = true)]
+    public class NonParallelCollectionDefinition { }
+
+
+    
     /// <summary>
     /// Integration tests to verify all 20 points of Task 1 work together
     /// </summary>
+    [Collection("Non-Parallel Collection")]
     public class Task1IntegrationTests
     {
         public Task1IntegrationTests()
         {
             // Initialize all Task 1 dependencies before each test
+            Core.IoC.IoC.Clear();
             new RegisterAllTask1Dependencies().Execute();
             CommandRegistry.Instance.Clear();
         }
