@@ -4,7 +4,6 @@ using SpaceGame.Core;
 namespace SpaceGame.IoC
 {
     /// <summary>
-    /// Master command to register all dependencies from Task 1
     /// This ensures all 20 points from the first assignment are properly registered
     /// </summary>
     public class RegisterAllTask1Dependencies : ICommand

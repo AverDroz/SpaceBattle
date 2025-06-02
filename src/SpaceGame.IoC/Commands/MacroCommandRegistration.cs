@@ -6,7 +6,7 @@ using SpaceGame.Core.IoC;
 namespace SpaceGame.IoC
 {
     /// <summary>
-    /// Register MacroCommand dependency in IoC container (Task 11)
+    /// Register MacroCommand dependency in IoC container 
     /// </summary>
     public class RegisterIoCDependencyMacroCommand : ICommand
     {
@@ -35,7 +35,7 @@ namespace SpaceGame.IoC
     }
 
     /// <summary>
-    /// Strategy for creating MacroCommand from command specifications (Task 12)
+    /// Strategy for creating MacroCommand from command specifications 
     /// </summary>
     public class CreateMacroCommandStrategy
     {
@@ -126,7 +126,7 @@ namespace SpaceGame.IoC
     }
 
     /// <summary>
-    /// Register Macro.Move and Macro.Rotate dependencies (Task 13)
+    /// Register Macro.Move and Macro.Rotate dependencies 
     /// </summary>
     public class RegisterIoCDependencyMacroMoveRotate : ICommand
     {

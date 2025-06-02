@@ -6,7 +6,7 @@ using SpaceGame.Core.IoC;
 namespace SpaceGame.IoC
 {
     /// <summary>
-    /// Register CommandInjectableCommand dependency in IoC container (Task 18)
+    /// Register CommandInjectableCommand dependency in IoC container 
     /// </summary>
     public class RegisterIoCDependencyCommandInjectableCommand : ICommand
     {

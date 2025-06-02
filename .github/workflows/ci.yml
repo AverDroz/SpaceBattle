@@ -38,7 +38,7 @@ jobs:
           --logger trx \
           --logger "console;verbosity=detailed" \
           /p:CollectCoverage=true \
-          /p:CoverletOutputFormat="opencover,cobertura" \
+          /p:CoverletOutputFormat="cobertura" \
           /p:CoverletOutput=./coverage/
     
     - name: Generate coverage report

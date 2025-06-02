@@ -152,7 +152,7 @@ namespace SpaceGame.Commands
         /// <summary>
         /// Unregisters and returns a command with O(1) complexity
         /// </summary>
-        public ICommand UnregisterCommand(string commandId)
+        public ICommand? UnregisterCommand(string commandId)
         {
             _commands.TryRemove(commandId, out var command);
             return command;

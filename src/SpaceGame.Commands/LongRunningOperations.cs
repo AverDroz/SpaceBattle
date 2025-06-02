@@ -72,7 +72,7 @@ namespace SpaceGame.Commands
     }
 
     /// <summary>
-    /// Command for starting long-running operations (Task 19)
+    /// Command for starting long-running operations 
     /// </summary>
     public class StartLongRunningOperationCommand : ICommand
     {
@@ -104,7 +104,7 @@ namespace SpaceGame.Commands
     }
 
     /// <summary>
-    /// Command for stopping long-running operations (Task 20)
+    /// Command for stopping long-running operations
     /// </summary>
     public class StopLongRunningOperationCommand : ICommand
     {
